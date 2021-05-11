@@ -1,5 +1,6 @@
 package alex.com.kotel.camera
 
+import alex.com.kotel.R
 import alex.com.kotel.camera.adapter.CameraAdapter
 import alex.com.kotel.databinding.ActivityCameraBinding
 import alex.com.kotel.logging.Logging
@@ -9,6 +10,7 @@ import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 
 
@@ -46,19 +48,30 @@ class CameraActivity : AppCompatActivity() {
         binding.recyclerImages.layoutManager = manager
         binding.recyclerImages.adapter = adapter
         binding.recyclerImages.setHasFixedSize(false)
-        //binding.recyclerImages.scrollToPosition(adapter.itemCount - 1)
+        //binding.recyclerImages.scrollToPosition(adapter.itemCount - 1)\
+
         adapter.setListener(object : CameraAdapter.Listener {
             override fun done(view: View) {
-                //doesnt work cykabluat
-                binding.recyclerImages.scrollToPosition(10)
-                //doesnt work cykabluat
+
+                binding.recyclerImages.smoothScrollToPosition(adapter.itemCount - 1)
 
 
-                Logging.logDebug("done! adapter size: ${adapter.itemCount}")
-                Logging.logDebug("view.height: ${view.height}")
-                Logging.logDebug("binding.recyclerImages: ${binding.recyclerImages.height}")
 
+                //TODO ЗАПОМНИ!!! ЧТО ТАК ТОЖЕ МОЖНО
+                //TODO ПОЧИТАТЬ ПРО КОТЛИН ФАЙЛ
+                //TODO image library GLIDE COIN
 
+                Logging.run {
+                    logDebug("done! adapter size: ${adapter.itemCount}")
+                    logDebug("view.height: ${view.height}")
+                    logDebug("binding.recyclerImages: ${binding.recyclerImages.height}")
+                }
+
+//                Logging.logDebug("done! adapter size: ${adapter.itemCount}")
+//                Logging.logDebug("view.height: ${view.height}")
+//                Logging.logDebug("binding.recyclerImages: ${binding.recyclerImages.height}")
+
+//
 //                binding.recyclerImages.smoothScrollBy(
 //                    0,
 //                    400
@@ -76,8 +89,6 @@ class CameraActivity : AppCompatActivity() {
         })
 
 
-
-
 //        val smoothScroller: SmoothScroller = object : LinearSmoothScroller(this) {
 //            override fun getVerticalSnapPreference(): Int {
 //                return SNAP_TO_START
@@ -90,7 +101,7 @@ class CameraActivity : AppCompatActivity() {
         binding.button.setOnClickListener {
             adapter.addPicture("https://i.pinimg.com/474x/1d/e0/ee/1de0eef600f9c57f451d44f64684df2d.jpg")
             //images.add("https://i.pinimg.com/474x/1d/e0/ee/1de0eef600f9c57f451d44f64684df2d.jpg")
-             //binding.recyclerImages.scrollToPosition(adapter.itemCount - 1)
+            //binding.recyclerImages.scrollToPosition(adapter.itemCount - 1)
             //binding.recyclerImages.smoothScrollBy(0, binding.recyclerImages.height)
 
         }

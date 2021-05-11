@@ -1,5 +1,6 @@
 package alex.com.kotel.camera.adapter
 
+import alex.com.kotel.common.CustomView
 import alex.com.kotel.databinding.ItemPictureBinding
 import alex.com.kotel.logging.Logging
 import android.content.Context
@@ -12,7 +13,12 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.util.*
 
-class CameraAdapter(private var pictures: ArrayList<String>, private var manager: LinearLayoutManager, var context: Context) :
+
+class CameraAdapter(
+    private var pictures: ArrayList<String>,
+    private var manager: LinearLayoutManager,
+    var context: Context
+) :
     RecyclerView.Adapter<CameraAdapter.PictureViewHolder>() {
 
     private lateinit var listener: Listener
@@ -42,6 +48,28 @@ class CameraAdapter(private var pictures: ArrayList<String>, private var manager
 
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
+
+
+//        holder.binding.image.getViewTreeObserver().addOnGlobalLayoutListener(
+//            object : OnGlobalLayoutListener {
+//
+//                override fun onGlobalLayout() {
+//                    holder.binding.image.getViewTreeObserver().removeGlobalOnLayoutListener(this)
+//                    Logging.logDebug("image.height: ${holder.binding.image.height}")
+//                }
+//            })
+
+        holder.binding.image.setListener(object : CustomView.Listener {
+            override fun done() {
+                if (flag) {
+                    Logging.logDebug("onSuccess-flag: $flag\tsize: ${pictures.size}")
+                    listener.done(holder.binding.image)
+                    flag = false
+                }
+            }
+        })
+
+
         Picasso.get()
             .load(pictures[position])
             .noPlaceholder()
@@ -50,11 +78,10 @@ class CameraAdapter(private var pictures: ArrayList<String>, private var manager
             .into(holder.binding.image, object : Callback {
                 override fun onSuccess() {
                     if (flag) {
-                        Logging.logDebug("onSuccess-flag: $flag\tsize: ${pictures.size-1}")
-                        listener.done(holder.binding.image)
-                        flag = false
-
-                        //manager.scrollToPosition(2)
+                        //Logging.logDebug("onSuccess-flag: $flag\tsize: ${pictures.size - 1}")
+                        //listener.done(holder.binding.image)
+                        //flag = false
+                        //manager.scrollToPosition(10)
                     }
                 }
 

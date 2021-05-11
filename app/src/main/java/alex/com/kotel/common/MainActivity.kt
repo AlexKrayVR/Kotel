@@ -1,4 +1,4 @@
-package alex.com.kotel
+package alex.com.kotel.common
 
 import alex.com.kotel.adapter.DummyAdapter
 import alex.com.kotel.database.Dummy
@@ -7,9 +7,6 @@ import alex.com.kotel.databinding.ActivityMainBinding
 import alex.com.kotel.logging.Logging
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
-import kotlinx.coroutines.flow.collect
 import java.util.ArrayList
 
 open class MainActivity : AppCompatActivity() {
